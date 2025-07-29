@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Parking Spots</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(120deg, #f8fafc 0%, #e3e6f3 100%);
+        }
+        .dashboard-header {
+            background: linear-gradient(90deg, #e3e6f3 60%, #f8fafc 100%);
+            border-radius: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            padding: 2rem 1rem 1rem 1rem;
+            margin-bottom: 2rem;
+        }
+        .card {
+            border-radius: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        }
+        .card-header {
+            border-top-left-radius: 1rem !important;
+            border-top-right-radius: 1rem !important;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+        }
+        .card-body {
+            padding: 1.5rem 1rem;
+        }
+        .table {
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .badge {
+            font-size: 1rem;
+            padding: 0.6em 1.2em;
+            border-radius: 1rem;
+        }
+        .spot-map {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        .spot-circle {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 3px solid #222;
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+        }
+        @media (max-width: 768px) {
+            .dashboard-header { padding: 1rem 0.5rem; }
+            .card-body { padding: 1rem 0.5rem; }
+            .spot-map { gap: 0.5rem; }
+            .spot-circle { width: 40px; height: 40px; font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body class="container mt-5">
+    <div class="dashboard-header text-center mb-5">
+        <h2 class="mb-2 fw-bold text-primary">🚗 Parking Spots for Lot: {{ lot.lot_name }}</h2>
+        <p class="lead text-secondary">View the status and layout of all spots in this lot</p>
+    </div>
+    <!-- Visual Spot Map -->
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-header bg-info text-white fw-bold">Visual Spot Map</div>
+        <div class="card-body spot-map">
+            {% for spot in spots %}
+                <div class="spot-circle" style="background-color:{{ 'rgb(40,167,69)' if spot.status == 'available' else 'rgb(220,53,69)' }};">
+                    {% if spot.status == 'available' %}
+                        {{ loop.index }}
+                    {% else %}
+                        X
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <a href="/admin/dashboard" class="btn btn-secondary w-100 mb-4">🔙 Back to Dashboard</a>
+</body>
+</html>

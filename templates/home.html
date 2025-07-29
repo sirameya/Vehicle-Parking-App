@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ParkEase – Your Ultimate Parking Solution</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        /* Custom CSS for enhanced design */
+        body {
+            background: linear-gradient(135deg, #f0f4f8, #e0e8f0); /* Soft gradient background */
+            min-height: 100vh;
+            font-family: 'Roboto', sans-serif; /* A more readable body font */
+            display: flex; /* Use flexbox for overall layout */
+            flex-direction: column; /* Stack content vertically */
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background-color: rgba(52, 58, 64, 0.9); /* Slightly transparent dark navbar */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        .navbar-brand {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: #ffffff !important;
+            font-size: 1.8rem;
+        }
+        .nav-link {
+            color: #ffffff !important;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #d1ecf1 !important; /* Lighter hover color */
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: url('data:image/jpeg;base64,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') no-repeat center center/cover;
+            color: #ffffff;
+            padding: 100px 0;
+            border-radius: 10px;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6); /* Stronger shadow for text */
+            flex-grow: 1; /* Allows hero section to take available space */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Vertically center content */
+            align-items: center; /* Horizontally center content */
+        }
+        .hero-section h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.5rem; /* Larger heading */
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px; /* Add some letter spacing */
+            margin-bottom: 1.5rem;
+        }
+        .hero-section p {
+            font-size: 1.3rem; /* Larger lead paragraph */
+            margin-bottom: 2.5rem;
+            max-width: 700px; /* Constrain width for readability */
+            line-height: 1.6;
+        }
+        .btn-custom {
+            padding: 14px 35px; /* Slightly larger buttons */
+            font-size: 1.2rem;
+            font-weight: 600; /* Bolder text */
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            text-transform: uppercase; /* Uppercase button text */
+            letter-spacing: 1px;
+        }
+        .btn-custom:hover {
+            transform: translateY(-3px); /* More pronounced lift effect */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
+        }
+        .btn-success.btn-custom { background-color: #28a745; border-color: #28a745; }
+        .btn-success.btn-custom:hover { background-color: #218838; border-color: #1e7e34; }
+        .btn-primary.btn-custom { background-color: #007bff; border-color: #007bff; }
+        .btn-primary.btn-custom:hover { background-color: #0069d9; border-color: #0062cc; }
+        .btn-dark.btn-custom { background-color: #343a40; border-color: #343a40; }
+        .btn-dark.btn-custom:hover { background-color: #23272b; border-color: #1d2124; }
+
+        /* Footer Styling */
+        .footer {
+            background-color: #343a40;
+            color: #f8f9fa;
+            padding: 20px 0;
+            text-align: center;
+            font-size: 0.9rem;
+            margin-top: auto; /* Pushes footer to the bottom */
+        }
+        .footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body class="d-flex flex-column">
+
+    <!-- Bootstrap Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="/">ParkEase</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="/login">User Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="/admin/login">Admin Login</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Bootstrap Hero Section -->
+    <section class="py-5 bg-light text-center">
+      <div class="container">
+        <h1 class="display-4 fw-bold mb-3">ParkEase</h1>
+        <p class="lead mb-4">Find, reserve, and manage parking spots with ease. Say goodbye to parking stress!</p>
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+          <a href="/register" class="btn btn-success btn-lg px-4">Get Started as User</a>
+          <a href="/login" class="btn btn-primary btn-lg px-4">Existing User Login</a>
+          <a href="/admin/login" class="btn btn-dark btn-lg px-4">Admin Access</a>
+        </div>
+      </div>
+    </section>
+
+  
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

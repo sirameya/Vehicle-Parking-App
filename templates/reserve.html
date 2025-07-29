@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reserve Spot</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .spot-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .spot {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid #333;
+        }
+        .spot.reserved {
+            background-color: #dc3545; /* red */
+            cursor: not-allowed;
+            color: white;
+        }
+        .spot.available {
+            background-color: #28a745; /* green */
+            color: white;
+        }
+        input[type="radio"] {
+            display: none;
+        }
+        input[type="radio"]:checked + label {
+            border: 3px solid #007bff;
+            box-shadow: 0 0 10px #007bff;
+        }
+        .confirm-section {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body class="container mt-5">
+    <h2>Reserve Parking Spot</h2>
+    <hr>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Lot: {{ lot.lot_name }}</h5>
+            <p>Capacity: {{ lot.capacity }}</p>
+            <p>Available Spots: {{ empty_spots }}</p>
+        </div>
+    </div>
+
+    {% if empty_spots > 0 %}
+        <!-- Selection Form -->
+        <form id="selection-form" method="get" action="">
+            <div class="spot-grid">
+                {% for spot in spots %}
+                    {% if spot.status == 'available' %}
+                        <input type="radio" id="spot{{ spot.id }}" name="spot_id" value="{{ spot.id }}" required>
+                        <label for="spot{{ spot.id }}" class="spot available">{{ spot.id }}</label>
+                    {% else %}
+                        <div class="spot reserved" title="Spot ID {{ spot.id }}">X</div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </form>
+
+        <!-- Confirmation Form -->
+        <div class="confirm-section">
+            <form id="confirm-form" action="{{ url_for('confirm_reservation', lot_id=lot.id) }}" method="post">
+                <input type="hidden" id="selected_spot_id" name="spot_id">
+                <button type="submit" class="btn btn-primary mt-4" id="confirm-btn" disabled>Confirm Reservation</button>
+            </form>
+        </div>
+
+        <script>
+            // Enable the confirm button when a spot is selected
+            document.querySelectorAll('input[name="spot_id"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const selectedValue = this.value;
+                    document.getElementById('selected_spot_id').value = selectedValue;
+                    document.getElementById('confirm-btn').disabled = false;
+                });
+            });
+        </script>
+    {% else %}
+        <p class="text-danger">This lot is currently full.</p>
+    {% endif %}
+
+    <a href="{{ url_for('user_dashboard') }}" class="btn btn-secondary mt-3">Back</a>
+</body>
+</html>
